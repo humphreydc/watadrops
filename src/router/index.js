@@ -1,0 +1,35 @@
+import { createRouter, createWebHistory } from 'vue-router'
+import HomePage from '@/views/HomePage.vue'
+import RegisterPage from '@/views/RegisterPage.vue'
+import StudentPage from '@/views/StudentPage.vue'
+import AdminPage from '@/views/AdminPage.vue'
+
+const routes = [
+    {
+        path: "/",
+        name: "Home",
+        component: HomePage
+    },
+    {
+        path: "/register",
+        name: "Register",
+        component: RegisterPage
+    },
+    {
+        path: "/student-dashboard",
+        name: "StudentDashboard",
+        component: StudentPage
+    },
+    {
+        path: "/admin-dashboard",
+        name: "AdminDashboard",
+        component: AdminPage
+    }
+];
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes
+})
+
+export default router
