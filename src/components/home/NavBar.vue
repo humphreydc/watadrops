@@ -13,13 +13,13 @@
             </div>
             <div class="flex items-center gap-16">
                 <ul class="flex items-center gap-8">
-                    <li><a href="#about" class="hover:text-(--primary-color)">About</a></li>
-                    <li><a href="#features" class="hover:text-(--primary-color)">Features</a></li>
-                    <li><a href="#data" class="hover:text-(--primary-color)">Data Usage</a></li>    
+                    <li><a href="#about" class="hover:text-(--primary-color) font-medium">About</a></li>
+                    <li><a href="#features" class="hover:text-(--primary-color) font-medium">Features</a></li>
+                    <li><a href="#data" class="hover:text-(--primary-color) font-medium">Data Usage</a></li>    
                 </ul>
                 <div class="flex items-center gap-4">
-                    <router-link to="/register" class="border py-1 px-5 rounded-sm cursor-pointer bg-white">Register</router-link>
-                    <div class="text-white bg-(--primary-color) border border-(--primary-color) rounded-sm py-1 px-5 cursor-pointer">Sign In</div>
+                    <router-link to="/register" class="border py-1 px-5 rounded-sm cursor-pointer bg-white font-medium">Register</router-link>
+                    <div class="text-white bg-(--primary-color) border border-(--primary-color) rounded-sm py-1 px-5 cursor-pointer font-medium">Sign In</div>
                 </div>
             </div>
         </div>

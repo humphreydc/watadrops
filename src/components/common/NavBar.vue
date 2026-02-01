@@ -15,8 +15,9 @@ const emit = defineEmits(['toggle-sidebar']);
                     cursor-pointer"
                 >☰
                 </button>
-            <p class="text-2xl font-semibold">Dashboard</p>
+                <p class="text-2xl font-semibold">Dashboard</p>
             </div>
+            <router-link to="/" class="cursor-pointer border">BACK TO HOME</router-link>
             <!-- notif and profile -->
             <!-- <div class="flex items-center gap-4">
                 <div class="w-12 h-12 bg-gray-300 rounded-full cursor-pointer"></div>
