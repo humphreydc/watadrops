@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --primary-color: #25B85D;
+  --main-bg-color: #F7F9FB;
+  --card-bg-color: #FFFFFF;
+  --bg-color: #242424;
+}
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--main-bg-color);
+  }
+}
+
+@layer components {
+  .card-border {
+    @apply bg-(--card-bg-color) rounded-xl border p-4 sm:p-6 border-gray-200 
+    shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300
+  }
+
+  .input-border {
+    @apply border border-gray-100 bg-gray-50 p-2 mt-2 rounded-md focus:outline-2 focus:outline-(--primary-color)
+    text-sm text-black tracking-normal
+  }
+}
+
