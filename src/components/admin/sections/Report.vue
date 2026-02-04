@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    <section class="space-y-6">
+    <section class="">
         <!-- Desktop View -->
         <div class="hidden md:block w-full overflow-x-auto card-border">
             <table class="w-full text-left border-collapse">
@@ -66,7 +66,7 @@
 
                 <div class="bg-gray-50/50 p-3 rounded-xl border border-gray-100">
                     <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Issue Details</p>
-                    <p class="text-[11px] text-gray-600 leading-relaxed font-medium italic italic">"The projector in Room 411 is currently not functioning. This affects the conduct of lectures..."</p>
+                    <p class="text-[11px] text-gray-600 leading-relaxed font-medium italic">"The projector in Room 411 is currently not functioning. This affects the conduct of lectures..."</p>
                 </div>
 
                 <div class="flex justify-between pt-4 border-t border-gray-50 items-end">

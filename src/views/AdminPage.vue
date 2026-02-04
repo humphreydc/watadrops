@@ -6,6 +6,8 @@ import Heading from '@/components/common/Heading.vue';
 import DataEntry from '@/components/admin/sections/DataEntry.vue';
 import Dashboard from '@/components/admin/Dashboard.vue';
 import Report from '@/components/admin/sections/Report.vue'
+import Resolution from '@/components/admin/sections/Resolution.vue';
+
 const isCollapsed = ref(true);
 
 const toggleSidebar = () => {
@@ -46,7 +48,22 @@ const activeItems = ref();
                 <Dashboard/>
                 <div class="sm:px-8 flex flex-col gap-6">
                     <DataEntry/>
+                    <div class="flex items-center justify-between px-2">
+                        <div class="">
+                            <h1 class="uppercase tracking-widest text-sm font-bold mb-1">Recent Requests</h1>  
+                            <p class="uppercase text-xs text-gray-600 font-semibold tracking-widest">Pending actions and monitoring</p> 
+                        </div>
+                        <div class="font-bold text-xs text-(--primary-color) cursor-pointer">VIEW ALL</div>
+                    </div>
                     <Report/>
+                    <div class="flex items-center justify-between px-2">
+                        <div class="">
+                            <h1 class="uppercase tracking-widest text-sm font-bold mb-1">Recent Requests</h1>  
+                            <p class="uppercase text-xs text-gray-600 font-semibold tracking-widest">Pending actions and monitoring</p> 
+                        </div>
+                        <div class="font-bold text-xs text-(--primary-color) cursor-pointer">VIEW ARCHIVES</div>
+                    </div>
+                    <Resolution/>
                 </div>
             </main>
         </div>
