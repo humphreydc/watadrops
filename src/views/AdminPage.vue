@@ -44,7 +44,7 @@ const activeItems = ref();
             <!-- resources dashboard section -->
             <main class="p-4">
                 <Dashboard/>
-                <div class="px-8 flex flex-col gap-6">
+                <div class="sm:px-8 flex flex-col gap-6">
                     <DataEntry/>
                     <Report/>
                 </div>
