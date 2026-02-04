@@ -3,8 +3,9 @@ import { ref } from 'vue';
 import NavBar from '@/components/common/NavBar.vue';
 import SidePanel from '@/components/common/SidePanel.vue';
 import Heading from '@/components/common/Heading.vue';
+import DataEntry from '@/components/admin/sections/DataEntry.vue';
 import Dashboard from '@/components/admin/Dashboard.vue';
-
+import Report from '@/components/admin/sections/Report.vue'
 const isCollapsed = ref(true);
 
 const toggleSidebar = () => {
@@ -37,12 +38,16 @@ const activeItems = ref();
         ></div>
 
         <!-- main column -->
-        <div class="flex-1">
+        <div class="flex-1 transition-all duration-300">
             <NavBar class="sticky top-0 bg-(--main-bg-color)" @toggle-sidebar="toggleSidebar"/>  
-            <Heading/> 
+            <Heading userType="admin"/> 
             <!-- resources dashboard section -->
             <main class="p-4">
                 <Dashboard/>
+                <div class="px-8 flex flex-col gap-6">
+                    <DataEntry/>
+                    <Report/>
+                </div>
             </main>
         </div>
     </div>

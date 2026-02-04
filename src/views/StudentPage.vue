@@ -39,8 +39,7 @@ const activeItems = ref();
         <!-- main column -->
         <div class="flex-1">
             <NavBar class="sticky top-0 bg-(--main-bg-color)" @toggle-sidebar="toggleSidebar"/>  
-            <Heading/> 
-            <h1 class="bold text-6xl">Student to</h1>
+            <Heading userType="student"/>
             <!-- resources dashboard section -->
             <main class="p-4">
                 <Dashboard/>
