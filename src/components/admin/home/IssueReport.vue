@@ -4,10 +4,10 @@
 <template>
 <div class="flex flex-col justify-center items-center">
     <div class="mx-auto flex flex-col justify-center items-center text-center gap-4 sm:gap-6 mb-12">
-        <h1 class="text-4xl sm:text-5xl font-bold">Location-Based Monitoring</h1>
+        <h1 class="text-4xl sm:text-5xl font-bold" >Location-Based Monitoring</h1>
         <p class="max-w-5xl text-lg sm:text-xl font-medium">Admins can filter and review reports by campus location to quickly identify high-impact issues and maintain smooth campus operations.</p>
     </div>
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-6 w-[80%] max-w-7xl">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 w-[80%] max-w-7xl">
     
     <div class="flex-1 rounded-xl overflow-hidden bg-white shadow-sm">
         <div class="bg-blue-100 px-2 py-4 flex items-center gap-3 pl-4">

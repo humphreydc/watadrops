@@ -1,12 +1,11 @@
 <script setup>
 </script>
 <template>
-    <section class="w-full flex flex-col justify-center">
+    <section class="w-full flex flex-col justify-center" id="reports">
         <!-- tinatamad na ako magcomment haha -->
         <div class="flex flex-col justify-center items-center py-32 lg:py-45 px-8 gap-6">
             <div class="mx-auto flex flex-col justify-center items-center text-center gap-4 sm:gap-6">
-                <h1 class="text-4xl sm:text-5xl font-bold">Location-Based Monitoring</h1>
-                <p class="max-w-5xl text-lg sm:text-xl font-medium">Admins can filter and review reports by campus location to quickly identify high-impact issues and maintain smooth campus operations.</p>
+                <h1 class="text-4xl sm:text-5xl font-bold">Issue Report Overview</h1>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mt-6 sm:mt-8">
                 <div class="card-border py-6 flex flex-col gap-4">

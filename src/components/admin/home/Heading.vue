@@ -12,7 +12,7 @@
                 Manage campus-wide electricity, water, and supply inventories. This portal is <br class="hidden md:block">restrictive to facility manager and authorized college administrators 
             </p>
             <div class="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4 w-full sm:w-auto p-4">
-                <a href="#data" class="border w-full sm:w-auto border-(--primary-color) py-3 px-4 rounded-sm bg-(--primary-color) text-white text-center font-medium">Proceed to Admin Login </a>
+                <router-link to="/Register" class="border w-full sm:w-auto border-(--primary-color) py-3 px-4 rounded-sm bg-(--primary-color) text-white text-center font-medium">Proceed to Admin Login </router-link>
                 <a href="#features" class="border w-full sm:w-auto py-3 px-4 rounded-sm text-center font-medium">View Public Data</a>
             </div>
         </div>

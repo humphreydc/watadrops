@@ -19,7 +19,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <section class="w-full flex flex-col justify-center">
+    <section class="w-full flex flex-col justify-center" id="guide">
         <!-- tinatamad na ako magcomment haha -->
         <div class="flex flex-col justify-center items-center py-32 lg:py-45 px-8 gap-16">
             <div class="mx-auto flex flex-col justify-center items-center text-center gap-4 sm:gap-6">

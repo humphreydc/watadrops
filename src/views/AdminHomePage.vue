@@ -11,11 +11,11 @@ import Foot from '@/components/admin/home/Foot.vue';
 <template>
     <div class="bg-white">
         <NavBar/>
-        <Heading class="fade-up"/>
-        <About/>
-        <Guide/>
-        <IssueReport/>
-        <Location/>
+        <Heading class="fade-up" id="home"/>
+        <About id="about"/>
+        <Guide id="how-it-works"/>
+        <IssueReport id="features"/>
+        <Location id="reports"/>
         <Foot/>
     </div>
 </template>

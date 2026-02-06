@@ -2,8 +2,14 @@
 </script>
 
 <template>
-    <section class="">
+    <section class="p-4 lg:px-8">
         <!-- Desktop View -->
+         <div class="flex items-center justify-between px-2 mb-4">
+                        <div class="">
+                            <h1 class="uppercase tracking-widest text-sm font-bold mb-1">Recent Requests</h1>  
+                            <p class="uppercase text-xs text-gray-600 font-semibold tracking-widest">Pending actions and monitoring</p> 
+                        </div>
+                    </div>
         <div class="hidden md:block w-full overflow-x-auto card-border">
             <table class="w-full text-left border-collapse">
                 <thead>
