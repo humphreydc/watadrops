@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Watts & Drops – Maintenance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">
+      <i class="bi bi-list hamburger" data-bs-toggle="offcanvas" data-bs-target="#sidebar"></i>
+      <img src="./img/9b9b3738-6772-4605-a57d-0d67ce8fccc4 - Edited.png" alt="logo">
+      Watts & Drops
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Navigation</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="nav flex-column" id="mainNav">
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-page="overview">
+            <span class="material-symbols-outlined">monitoring</span> Overview
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-page="request">
+            <span class="material-symbols-outlined">assignment</span> Request
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#" data-page="announcement">
+            <span class="material-symbols-outlined">campaign</span> Announcement
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container py-4">
+    <div id="announcement" class="page-section active">
+      <h2>Announcement</h2>
+      <p class="text-muted">Stay informed about maintenance resolutions across the campus</p>
+
+      <div class="announcement available">
+        <div class="status">Available</div>
+        <div class="row p-3">
+          <div class="col-md-4"><small>Location</small><h6>CSS 305</h6></div>
+          <div class="col-md-4"><small>Time</small><h6>9:00 AM - 10:40 PM</h6></div>
+          <div class="col-md-4"><small>Type</small><h6>Water Usage</h6></div>
+        </div>
+      </div>
+
+      <div class="announcement not-available">
+        <div class="status">Not Available</div>
+        <div class="row p-3">
+          <div class="col-md-4"><small>Location</small><h6>CSS 404</h6></div>
+          <div class="col-md-4"><small>Time</small><h6>10:00 AM - 12:40 PM</h6></div>
+          <div class="col-md-4"><small>Type</small><h6>Electricity Usage</h6></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="request" class="page-section">
+      <div class="form-container">
+        <h2 class="mb-4">Submit New Request</h2>
+        <form id="maintenanceForm">
+          <input type="text" class="form-control" placeholder="Select Room..." required>
+
+          <select class="form-select" required>
+            <option selected disabled value="">Resource Type...</option>
+            <option>Electricity</option>
+            <option>Water</option>
+          </select>
+
+          <textarea class="form-control" rows="5" placeholder="Please describe the issue in detail..." required></textarea>
+
+          <button type="submit" class="btn btn-submit-maintenance">Submit to Maintenance</button>
+        </form>
+
+        <div class="awareness-card">
+          <h4>Maintenance Awareness</h4>
+          <p class="step-text"><strong>Step 1:</strong> Identify the specific room or area where the resource is failing.</p>
+          <p class="step-text"><strong>Step 2:</strong> Use the "Requests" tab to fill out the form. Your report will be visible on the system overview.</p>
+          <p class="step-text"><strong>Step 3:</strong> Keep an eye on the "Overview" tab. Once maintenance resolves the issue, the alert will be cleared.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="overview" class="page-section">
+      <h2>System Overview</h2>
+      <p>Monitoring dashboard content goes here.</p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

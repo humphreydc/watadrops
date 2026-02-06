@@ -1,6 +1,8 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { Line } from 'vue-chartjs'
+import { db } from '@/firebase/config'
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -25,94 +27,69 @@ ChartJS.register(
   Filler
 )
 
-// Props for customization
-const props = defineProps({
-  timeRange: {
-    type: String,
-    default: 'month' // 'day', 'week', 'month'
+// Active resource filter
+const activeResource = ref('all')
+const rawLogs = ref([])
+
+// Map months to indices for grouping
+const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+onMounted(() => {
+  const q = query(collection(db, 'logs'), orderBy('date', 'asc'))
+  onSnapshot(q, (snapshot) => {
+    rawLogs.value = snapshot.docs.map(doc => doc.data())
+  })
+})
+
+// Processed stats for cards
+const stats = computed(() => {
+  const electricity = rawLogs.value.filter(l => l.type === 'electricity').reduce((acc, curr) => acc + curr.value, 0)
+  const water = rawLogs.value.filter(l => l.type === 'water').reduce((acc, curr) => acc + curr.value, 0)
+  
+  return {
+    electricity,
+    water,
+    supplies: 0 // Placeholder for supplies if needed
   }
 })
 
-// Active resource filter
-const activeResource = ref('all')
-
-// Sample data - replace with real API data
-const resourceData = {
-  electricity: {
-    label: 'Electricity (kWh)',
-    data: [245, 268, 234, 289, 256, 298, 267, 301, 278, 312, 289, 325],
-    color: '#fbbf24', // yellow
-    unit: 'kWh'
-  },
-  water: {
-    label: 'Water (m³)',
-    data: [120, 135, 118, 142, 129, 151, 138, 156, 142, 162, 148, 168],
-    color: '#3b82f6', // blue
-    unit: 'm³'
-  },
-  supplies: {
-    label: 'Supplies Usage (%)',
-    data: [65, 58, 71, 54, 68, 49, 73, 45, 69, 41, 75, 38],
-    color: '#ef4444', // red
-    unit: '%'
-  }
-}
-
-// Time labels based on range
-const timeLabels = {
-  day: ['12AM', '3AM', '6AM', '9AM', '12PM', '3PM', '6PM', '9PM', '12AM'],
-  week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-  month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-}
-
-// Computed chart data
+// Group data by month for chart
 const chartData = computed(() => {
+  const monthlyData = monthNames.map(() => ({ electricity: 0, water: 0 }))
+  
+  rawLogs.value.forEach(log => {
+    const date = new Date(log.date)
+    const month = date.getMonth()
+    if (log.type === 'electricity') monthlyData[month].electricity += log.value
+    if (log.type === 'water') monthlyData[month].water += log.value
+  })
+
   const datasets = []
   
   if (activeResource.value === 'all' || activeResource.value === 'electricity') {
     datasets.push({
-      label: resourceData.electricity.label,
-      data: resourceData.electricity.data,
-      borderColor: resourceData.electricity.color,
-      backgroundColor: resourceData.electricity.color + '20',
+      label: 'Electricity (kWh)',
+      data: monthlyData.map(d => d.electricity),
+      borderColor: '#fbbf24',
+      backgroundColor: '#fbbf2420',
       tension: 0.4,
-      borderWidth: 3,
-      pointRadius: 4,
-      pointHoverRadius: 6,
       fill: true
     })
   }
   
   if (activeResource.value === 'all' || activeResource.value === 'water') {
     datasets.push({
-      label: resourceData.water.label,
-      data: resourceData.water.data,
-      borderColor: resourceData.water.color,
-      backgroundColor: resourceData.water.color + '20',
+      label: 'Water (m³)',
+      data: monthlyData.map(d => d.water),
+      borderColor: '#3b82f6',
+      backgroundColor: '#3b82f620',
       tension: 0.4,
-      borderWidth: 3,
-      pointRadius: 4,
-      pointHoverRadius: 6,
-      fill: true
-    })
-  }
-  
-  if (activeResource.value === 'all' || activeResource.value === 'supplies') {
-    datasets.push({
-      label: resourceData.supplies.label,
-      data: resourceData.supplies.data,
-      borderColor: resourceData.supplies.color,
-      backgroundColor: resourceData.supplies.color + '20',
-      tension: 0.4,
-      borderWidth: 3,
-      pointRadius: 4,
-      pointHoverRadius: 6,
       fill: true
     })
   }
   
   return {
-    labels: timeLabels[props.timeRange],
+    labels: monthNames,
     datasets
   }
 })
@@ -120,85 +97,14 @@ const chartData = computed(() => {
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
-  interaction: {
-    mode: 'index',
-    intersect: false,
-  },
   plugins: {
-    legend: {
-      display: true,
-      position: 'top',
-      labels: {
-        color: '#4b5563',
-        font: {
-          size: 10,
-          family: 'Inter, sans-serif'
-        },
-        padding: 10,
-        usePointStyle: true,
-        pointStyle: 'circle',
-        boxWidth: 6,
-        boxHeight: 6
-      }
-    },
-    tooltip: {
-      backgroundColor: '#ffffff',
-      titleColor: '#1f2937',
-      bodyColor: '#4b5563',
-      borderColor: '#e5e7eb',
-      borderWidth: 1,
-      padding: 8,
-      displayColors: true,
-      titleFont: {
-        size: 12
-      },
-      bodyFont: {
-        size: 11
-      },
-      callbacks: {
-        label: function(context) {
-          let label = context.dataset.label || ''
-          if (label) {
-            label += ': '
-          }
-          label += context.parsed.y
-          return label
-        }
-      }
-    }
+    legend: { display: true, position: 'top' }
   },
   scales: {
-    x: {
-      grid: {
-        color: '#e5e7eb',
-        drawBorder: false,
-      },
-      ticks: {
-        color: '#6b7280',
-        font: {
-          size: 9
-        },
-        maxRotation: 0,
-        minRotation: 0
-      }
-    },
-    y: {
-      beginAtZero: true,
-      grid: {
-        color: '#e5e7eb',
-        drawBorder: false,
-      },
-      ticks: {
-        color: '#6b7280',
-        font: {
-          size: 9
-        }
-      }
-    }
+    y: { beginAtZero: true }
   }
 }
 
-// Filter buttons
 const filterResource = (resource) => {
   activeResource.value = resource
 }
@@ -218,47 +124,24 @@ const filterResource = (resource) => {
         <button
           @click="filterResource('all')"
           :class="[
-            'px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all sm:flex-none',
-            activeResource === 'all'
-              ? 'bg-green-500 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            'px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all',
+            activeResource === 'all' ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
           ]"
-        >
-          All
-        </button>
+        >All</button>
         <button
           @click="filterResource('electricity')"
           :class="[
-            'px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all sm:flex-none',
-            activeResource === 'electricity'
-              ? 'bg-yellow-500 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            'px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all',
+            activeResource === 'electricity' ? 'bg-yellow-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
           ]"
-        >
-          Electricity
-        </button>
+        >Electricity</button>
         <button
           @click="filterResource('water')"
           :class="[
-            'px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all sm:flex-none',
-            activeResource === 'water'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            'px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all',
+            activeResource === 'water' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
           ]"
-        >
-          Water
-        </button>
-        <button
-          @click="filterResource('supplies')"
-          :class="[
-            'px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all sm:flex-none',
-            activeResource === 'supplies'
-              ? 'bg-red-500 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          ]"
-        >
-          Supplies
-        </button>
+        >Water</button>
       </div>
     </div>
     
@@ -268,46 +151,19 @@ const filterResource = (resource) => {
     </div>
     
     <!-- Stats Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-4 sm:mt-6">
-      <!-- Electricity Card -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-4 sm:mt-6">
       <div class="bg-yellow-50 rounded-lg p-3 sm:p-4 border border-yellow-200">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-gray-600 text-xs sm:text-sm">Electricity</span>
-          <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-yellow-500"></div>
-        </div>
-        <p class="text-xl sm:text-2xl font-bold text-gray-900">325 kWh</p>
-        <p class="text-xs sm:text-sm text-green-600 mt-1">↑ 12% from last period</p>
+        <span class="text-gray-600 text-xs sm:text-sm">Total Electricity</span>
+        <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ stats.electricity }} kWh</p>
       </div>
-      
-      <!-- Water Card -->
       <div class="bg-blue-50 rounded-lg p-3 sm:p-4 border border-blue-200">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-gray-600 text-xs sm:text-sm">Water</span>
-          <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-blue-500"></div>
-        </div>
-        <p class="text-xl sm:text-2xl font-bold text-gray-900">168 m³</p>
-        <p class="text-xs sm:text-sm text-green-600 mt-1">↑ 8% from last period</p>
-      </div>
-      
-      <!-- Supplies Card -->
-      <div class="bg-red-50 rounded-lg p-3 sm:p-4 border border-red-200">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-gray-600 text-xs sm:text-sm">Supplies</span>
-          <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500"></div>
-        </div>
-        <p class="text-xl sm:text-2xl font-bold text-gray-900">38%</p>
-        <p class="text-xs sm:text-sm text-red-600 mt-1">↓ 27% from last period</p>
+        <span class="text-gray-600 text-xs sm:text-sm">Total Water</span>
+        <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ stats.water }} m³</p>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.resource-chart-container {
-  background: #ffffff;
-}
-
-.chart-wrapper {
-  position: relative;
-}
+.chart-wrapper { position: relative; }
 </style>
