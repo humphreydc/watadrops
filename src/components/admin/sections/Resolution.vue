@@ -1,4 +1,33 @@
 <script setup>
+import { computed } from 'vue'
+import { useRequests } from '@/composables/useRequests'
+
+const { requests } = useRequests()
+
+const resolved = computed(() =>
+  requests.value.filter(r => r.status === 'resolved')
+)
+
+const formatTime = (t) => {
+  if (!t) return ''
+  const d = t.toDate ? t.toDate() : new Date(t)
+  return d.toLocaleTimeString()
+}
+
+const getDuration = (r) => {
+  if (!r.resolvedAt || !r.createdAt) return ''
+
+  const start = r.createdAt.toDate()
+  const end = r.resolvedAt.toDate()
+
+  const diff = Math.abs(end - start)
+
+  const mins = Math.floor(diff / 60000)
+  const h = Math.floor(mins / 60)
+  const m = mins % 60
+
+  return `${h}h ${m}m`
+}
 </script>
 
 <template>
@@ -22,28 +51,50 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50">
-                    <tr class="hover:bg-gray-50/50 transition-colors group">
-                        <td class="px-6 py-6">
-                            <div class="flex flex-col">
-                                <span class="text-sm font-bold text-gray-900">Casey Lou Garcia</span>
-                                <span class="text-[11px] font-medium text-gray-400">Electricity Issue</span>
-                            </div>
-                        </td>
-                        <td class="px-6 py-6 text-sm font-semibold text-gray-600">Room 411</td>
-                        <td class="px-6 py-6 text-center">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[10px] font-black bg-green-50 text-green-700 border border-green-100 uppercase tracking-tight">Resolved</span>
-                        </td>
-                        <td class="px-6 py-6">
-                            <p class="text-xs text-gray-500 max-w-xs leading-relaxed line-clamp-2 italic font-medium">"Technical team successfully restored power to the projector system..."</p>
-                        </td>
-                        <td class="px-6 py-6 text-right">
-                            <div class="flex flex-col items-end">
-                                <span class="text-[11px] font-bold text-gray-900">1h 40m</span>
-                                <span class="text-[10px] font-medium text-gray-400 mt-1 uppercase tracking-tighter">09:00 - 10:40 AM</span>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
+  <tr
+    v-for="r in resolved"
+    :key="r.id"
+    class="hover:bg-gray-50/50 transition-colors group"
+  >
+    <td class="px-6 py-6">
+      <div class="flex flex-col">
+        <span class="text-sm font-bold text-gray-900">
+          {{ r.name }}
+        </span>
+        <span class="text-[11px] font-medium text-gray-400">
+          {{ r.category }} Issue
+        </span>
+      </div>
+    </td>
+
+    <td class="px-6 py-6 text-sm font-semibold text-gray-600">
+      {{ r.location }}
+    </td>
+
+    <td class="px-6 py-6 text-center">
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[10px] font-black bg-green-50 text-green-700 border uppercase">
+        Resolved
+      </span>
+    </td>
+
+    <td class="px-6 py-6">
+      <p class="text-xs text-gray-500 max-w-xs leading-relaxed line-clamp-2 italic font-medium">
+        "{{ r.resolution }}"
+      </p>
+    </td>
+
+    <td class="px-6 py-6 text-right">
+      <div class="flex flex-col items-end">
+        <span class="text-[11px] font-bold text-gray-900">
+          {{ getDuration(r) }}
+        </span>
+        <span class="text-[10px] font-medium text-gray-400 mt-1">
+          {{ formatTime(r.createdAt) }} - {{ formatTime(r.resolvedAt) }}
+        </span>
+      </div>
+    </td>
+  </tr>
+</tbody>
             </table>
         </div>
 

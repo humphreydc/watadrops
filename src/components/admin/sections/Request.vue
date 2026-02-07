@@ -1,4 +1,12 @@
 <script setup>
+import { computed } from 'vue'
+import { useRequests } from '@/composables/useRequests'
+
+const { requests, resolveRequest, assignRequest, loadMore, loading } = useRequests()
+
+const pending = computed(() =>
+  requests.value.filter(r => r.status !== 'resolved')
+)
 </script>
 
 <template>
@@ -22,29 +30,65 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50">
-                    <tr class="hover:bg-gray-50/50 transition-colors group">
-                        <td class="px-6 py-6">
-                            <div class="flex flex-col">
-                                <span class="text-sm font-bold text-gray-900">Casey Lou Garcia</span>
-                                <span class="text-[11px] font-medium text-gray-400">ID: 2023506089</span>
-                            </div>
-                        </td>
-                        <td class="px-6 py-6 text-sm font-semibold text-gray-600">Room 411</td>
-                        <td class="px-6 py-6 text-center">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[10px] font-black bg-red-50 text-red-700 border border-red-100 uppercase tracking-tight">High Priority</span>
-                        </td>
-                        <td class="px-6 py-6">
-                            <p class="text-xs text-gray-500 max-w-xs leading-relaxed line-clamp-2 italic font-medium">"The projector in Room 411 is currently not functioning..."</p>
-                        </td>
-                        <td class="px-6 py-6 text-right">
-                            <div class="flex items-center justify-end gap-2">
-                                <button class="px-3 py-1.5 bg-green-600 text-white text-[10px] font-black uppercase rounded shadow-sm hover:bg-green-700 transition-colors">Resolve</button>
-                                <button class="px-3 py-1.5 bg-white border border-gray-200 text-gray-600 text-[10px] font-black uppercase rounded hover:bg-gray-50 transition-colors">Assign</button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
+  <tr
+    v-for="r in pending"
+    :key="r.id"
+    class="hover:bg-gray-50/50 transition-colors group"
+  >
+    <td class="px-6 py-6">
+      <div class="flex flex-col">
+        <span class="text-sm font-bold text-gray-900">{{ r.name }}</span>
+        <span class="text-[11px] font-medium text-gray-400">
+          ID: {{ r.studentId }}
+        </span>
+      </div>
+    </td>
+
+    <td class="px-6 py-6 text-sm font-semibold text-gray-600">
+      {{ r.location }}
+    </td>
+
+    <td class="px-6 py-6 text-center">
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[10px] font-black uppercase tracking-tight">
+        {{ r.priority }} Priority
+      </span>
+    </td>
+
+    <td class="px-6 py-6">
+      <p class="text-xs text-gray-500 max-w-xs leading-relaxed line-clamp-2 italic font-medium">
+        "{{ r.issue }}"
+      </p>
+    </td>
+
+    <td class="px-6 py-6 text-right">
+      <div class="flex items-center justify-end gap-2">
+        <button
+          @click="resolveRequest(r.id, 'Resolved by admin')"
+          class="px-3 py-1.5 bg-green-600 text-white text-[10px] font-black uppercase rounded"
+        >
+          Resolve
+        </button>
+
+        <button
+          @click="assignRequest(r.id)"
+          class="px-3 py-1.5 bg-white border text-[10px] font-black uppercase rounded"
+        >
+          Assign
+        </button>
+      </div>
+    </td>
+  </tr>
+</tbody>
             </table>
+            <div class="flex justify-center mt-4">
+  <button
+    @click="loadMore"
+    class="px-4 py-2 text-xs font-bold border rounded cursor-pointer"
+  >
+    {{ loading ? 'Loading...' : 'Load More' }}
+  </button>
+</div>
+
         </div>
 
         <!-- Mobile View -->

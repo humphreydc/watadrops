@@ -43,7 +43,7 @@
   }
 
   .input-border {
-    @apply border border-gray-100 bg-gray-50 p-2 mt-2 rounded-md focus:outline-2 focus:outline-(--primary-color)
+    @apply border border-gray-200 bg-gray-50 p-2 mt-2 rounded-md focus:outline-2 focus:outline-(--primary-color)
     text-sm text-black tracking-normal
   }
 

@@ -8,21 +8,43 @@ const value = ref(null)
 const location = ref('')
 const date = ref('')
 
-const submitLog = async () => {
-  if (!value.value || !location.value || !date.value) return
+import { query, where, getDocs, updateDoc, doc } from 'firebase/firestore'
 
-  await addDoc(collection(db, 'logs'), {
+const submitLog = async () => {
+  if (!value.value || !date.value) return
+
+  const monthKey = date.value.slice(0, 7)
+
+  const q = query(
+    collection(db, 'logs'),
+    where('type', '==', type.value),
+    where('month', '==', monthKey)
+  )
+
+  const snapshot = await getDocs(q)
+
+  const logData = {
     type: type.value,
     value: Number(value.value),
     location: location.value,
+    month: monthKey,
     date: Timestamp.fromDate(new Date(date.value))
-  })
+  }
 
-  // reset form
+  if (!snapshot.empty) {
+    const existing = snapshot.docs[0]
+
+    await updateDoc(doc(db, 'logs', existing.id), logData)
+
+  } else {
+    await addDoc(collection(db, 'logs'), logData)
+  }
+
   value.value = null
   location.value = ''
   date.value = ''
 }
+
 </script>
 
 <template>

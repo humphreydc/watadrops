@@ -1,18 +1,20 @@
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { db } from '@/firebase/config'
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore'
 
 const logs = ref([])
-let initialized = false
 
 export function useLogs() {
-  if (!initialized) {
+  onMounted(() => {
     const q = query(collection(db, 'logs'), orderBy('date', 'asc'))
-    onSnapshot(q, snapshot => {
-      logs.value = snapshot.docs.map(doc => doc.data())
+
+    onSnapshot(q, (snapshot) => {
+      logs.value = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }))
     })
-    initialized = true
-  }
+  })
 
   return { logs }
 }

@@ -29,17 +29,13 @@ ChartJS.register(
 
 // Active resource filter
 const activeResource = ref('all')
-const rawLogs = ref([])
 
 // Map months to indices for grouping
 const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-onMounted(() => {
-  const q = query(collection(db, 'logs'), orderBy('date', 'asc'))
-  onSnapshot(q, (snapshot) => {
-    rawLogs.value = snapshot.docs.map(doc => doc.data())
-  })
-})
+import { useLogs } from '@/composables/useLogs'
+
+const { logs: rawLogs } = useLogs()
 
 // Processed stats for cards
 const stats = computed(() => {
@@ -56,12 +52,19 @@ const stats = computed(() => {
 // Group data by month for chart
 const chartData = computed(() => {
   const monthlyData = monthNames.map(() => ({ electricity: 0, water: 0 }))
-  
+
   rawLogs.value.forEach(log => {
     const date = log.date?.toDate ? log.date.toDate() : new Date(log.date)
     const month = date.getMonth()
-    if (log.type === 'electricity') monthlyData[month].electricity += log.value
-    if (log.type === 'water') monthlyData[month].water += log.value
+
+    // OVERWRITE instead of add
+    if (log.type === 'electricity') {
+      monthlyData[month].electricity = log.value
+    }
+
+    if (log.type === 'water') {
+      monthlyData[month].water = log.value
+    }
   })
 
   const datasets = []
