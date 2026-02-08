@@ -1,6 +1,50 @@
 <script setup>
-import { ref } from 'vue';
+import { computed } from 'vue'
+import { useLogs } from '@/composables/useLogs'
 
+const { logs } = useLogs()
+
+const waterLogs = computed(() => {
+  return logs.value
+    .filter(l => l.type === 'water')
+    .sort((a, b) => a.date - b.date)
+})
+
+const totalWater = computed(() => {
+  if (waterLogs.value.length === 0) return 0
+  return waterLogs.value[waterLogs.value.length - 1].value
+})
+
+const lastMonthWater = computed(() => {
+  if (waterLogs.value.length < 2) return 0
+  return waterLogs.value[waterLogs.value.length - 2].value
+})
+
+const percentChange = computed(() => {
+  if (!lastMonthWater.value) return 0
+
+  return Math.round(
+    ((totalWater.value - lastMonthWater.value) /
+      lastMonthWater.value) * 100
+  )
+})
+
+const percentUsed = computed(() => {
+  const max = 500
+  return Math.min(100, Math.round((totalWater.value / max) * 100))
+})
+
+const efficiencyLevel = computed(() => {
+  const value = totalWater.value
+
+  if (value < 100) return 5
+  if (value < 200) return 4
+  if (value < 300) return 3
+  if (value < 400) return 2
+  return 1
+})
+
+const changePositive = computed(() => percentChange.value > 0)
 </script>
 
 <template>
@@ -28,7 +72,13 @@ import { ref } from 'vue';
                     
                 <div class="flex flex-col items-end gap-2">
                     <!-- here data -->
-                    <div class="text-center text-xs text-red-700 font-bold bg-red-100 px-3 py-1 rounded-full border border-red-200">+8%</div>
+                    <div
+  class="text-center text-xs font-bold px-3 py-1 rounded-full border"
+  :class="changePositive
+    ? 'text-red-700 bg-red-100 border-red-200'
+    : 'text-green-700 bg-green-100 border-green-200'">
+  {{ changePositive ? '+' : '' }}{{ percentChange }}%
+</div>
                     <div class="text-xs text-gray-400">vs last month</div>
                 </div>
             </div>
@@ -38,16 +88,15 @@ import { ref } from 'vue';
                 <!-- basta kung ilang m^3 -->
                 <div>
                     <div class="text-xs font-medium text-gray-500 mb-1">Total Consumption</div>
-                    <div class="font-bold text-sm text-gray-400"><span class="text-3xl font-black text-black mr-1">125</span>m³</div>
+                    <div class="font-bold text-sm text-gray-400"><span class="text-3xl font-black text-black mr-1">{{ totalWater }}</span>m³</div>
                 </div>
                 <div class="flex flex-col gap-2">
                     <div class="text-xs text-blue-600 font-bold">EFFICIENCY LEVEL</div>
                     <div class="flex justify-end items-center gap-1">
-                        <div class="w-2 h-4 rounded-full bg-blue-500"></div>
-                        <div class="w-2 h-4 rounded-full bg-blue-500"></div>
-                        <div class="w-2 h-4 rounded-full bg-blue-500"></div>
-                        <div class="w-2 h-4 rounded-full bg-blue-500"></div>
-                        <div class="w-2 h-4 rounded-full bg-gray-200"></div>
+                        <div v-for="i in 5" :key="i"
+                            class="w-2 h-4 rounded-full"
+                            :class="i <= efficiencyLevel ? 'bg-blue-500' : 'bg-gray-200'">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -55,11 +104,14 @@ import { ref } from 'vue';
                 <div class="flex justify-between">
                     <!-- percent calc -->
                     <div class="text-xs text-gray-500 font-bold">Monthly usage</div>
-                    <div class="text-xs font-bold"><span>62</span>% Used</div>
+                    <div class="text-xs font-bold">{{ percentUsed }}% Used</div>
                 </div>
                 <!-- same here -->
                 <div class="w-full h-4 bg-gray-100 border border-gray-200 rounded-full flex items-center">
-                    <div class="bg-blue-400 w-[45%] h-4 rounded-full"></div>
+                    <div
+                        class="bg-blue-400 h-4 rounded-full"
+                        :style="{ width: percentUsed + '%' }">
+                    </div>
                 </div>
             </div>
         </div>
