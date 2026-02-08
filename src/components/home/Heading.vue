@@ -6,7 +6,7 @@
         <div class="flex justify-center items-center flex-col gap-4">
             <img src="/src/assets/logo.png" alt="logo" class="w-18 sm:w-20 lg:w-24">
             <h1 class="font-black text-4xl sm:text-6xl text-center leading-tight bg-linear-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent">
-               Administrative Control Center
+               Watts and Drops
             </h1>
             <p class="text-center text-lg sm:text-xl font-medium max-w-3xl px-4">
                 Manage campus-wide electricity, water, and supply inventories. This portal is <br class="hidden md:block">restrictive to facility manager and authorized college administrators 

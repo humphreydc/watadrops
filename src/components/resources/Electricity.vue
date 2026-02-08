@@ -73,12 +73,12 @@ const changePositive = computed(() => percentChange.value > 0)
                 <div class="flex flex-col items-end gap-2">
                     <!-- here data -->
                    <div
-  class="text-center text-xs font-bold px-3 py-1 rounded-full border"
-  :class="changePositive
-    ? 'text-red-700 bg-red-100 border-red-200'
-    : 'text-green-700 bg-green-100 border-green-200'">
-  {{ changePositive ? '+' : '' }}{{ percentChange }}%
-</div>
+                        class="text-center text-xs font-bold px-3 py-1 rounded-full border"
+                        :class="changePositive
+                            ? 'text-red-700 bg-red-100 border-red-200'
+                            : 'text-green-700 bg-green-100 border-green-200'">
+                        {{ changePositive ? '+' : '' }}{{ percentChange }}%
+                    </div>
                     <div class="text-xs text-gray-400">vs last month</div>
                 </div>
             </div>
