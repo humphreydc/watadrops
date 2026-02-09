@@ -1,0 +1,144 @@
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { onAuthStateChanged, getIdTokenResult } from 'firebase/auth'
+import { collection, query, where, getDocs } from 'firebase/firestore'
+import { auth, db } from '@/firebase/config'
+
+const navItems = ref([
+  { id: "home", label: "Home", href: "#home" },
+  { id: "about", label: "About", href: "#about" },
+  { id: "how-it-works", label: "How It Works", href: "#how-it-works" }, 
+  { id: "reports", label: "Reports", href: "#reports" },
+])
+
+const isMenuOpen = ref(false)
+const router = useRouter()
+
+const user = ref(null)
+const role = ref(null)
+const hasApprovedRequest = ref(false) // track if student has approved request
+
+// Listen to auth state
+onAuthStateChanged(auth, async (currentUser) => {
+  user.value = currentUser
+
+  if (currentUser) {
+    const tokenResult = await getIdTokenResult(currentUser)
+    role.value = tokenResult.claims.role || "student"
+
+    // Check if student already has an approved request
+    if (role.value === "student") {
+      const q = query(
+        collection(db, "dashboardRequests"),
+        where("uid", "==", currentUser.uid),
+        where("status", "==", "approved")
+      )
+      const snap = await getDocs(q)
+      hasApprovedRequest.value = !snap.empty
+    }
+  } else {
+    role.value = null
+    hasApprovedRequest.value = false
+  }
+})
+
+const isSignedIn = computed(() => !!user.value)
+const isAdmin = computed(() => role.value === "admin")
+const isStudent = computed(() => role.value === "student")
+
+// Routes
+const adminDashboardRoute = "/admin-dashboard"
+const studentDashboardRoute = "/student-dashboard"
+const requestRoute = "/student-request"
+
+</script>
+
+<template>
+  <nav class="w-full fixed top-0 border border-gray-200 bg-gray-50 z-50">
+
+    <!-- Desktop Nav -->
+    <div class="hidden lg:flex justify-between items-center px-6 py-3 sm:px-10 sm:py-4">
+      <div class="flex items-center gap-4">
+        <img src="/src/assets/logo.png" alt="logo" class="w-8">
+        <h1 class="text-2xl lg:text-3xl bg-linear-to-r from-cyan-500 to-green-500 bg-clip-text text-transparent font-bold">
+          Watts & Drops
+        </h1>
+      </div>
+
+      <div class="flex items-center gap-8">
+        <ul class="flex items-center gap-8 font-medium">
+          <li 
+            v-for="item in navItems" 
+            :key="item.id" 
+            class="cursor-pointer hover:text-green-600"
+          >
+            <a :href="item.href">{{ item.label }}</a>
+          </li>
+        </ul>
+
+        <div class="flex items-center gap-4">
+          <!-- Not Signed In -->
+          <template v-if="!isSignedIn">
+            <router-link to="/register" class="border py-1 px-5 rounded-sm cursor-pointer bg-white hover:bg-gray-100">Login</router-link>
+            <router-link to="/register" class="border py-1 px-5 rounded-sm cursor-pointer bg-white hover:bg-gray-100">Sign Up</router-link>
+          </template>
+
+          <!-- Admin Users -->
+          <router-link v-else-if="isAdmin" :to="adminDashboardRoute" class="border py-2 px-5 rounded-lg text-white font-semibold cursor-pointer bg-(--primary-color) hover:opacity-90">
+            Dashboard
+          </router-link>
+
+          <!-- Student Users -->
+          <router-link 
+            v-else-if="isStudent"
+            :to="hasApprovedRequest ? studentDashboardRoute : requestRoute"
+            class="border py-2 px-5 rounded-lg text-white font-semibold cursor-pointer bg-(--primary-color) hover:opacity-90"
+          >
+            {{ hasApprovedRequest ? "Student Dashboard" : "Request Student Dashboard" }}
+          </router-link>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Header -->
+    <div class="flex justify-between items-center px-6 py-3 lg:hidden">
+      <div class="flex items-center gap-4">
+        <img src="/src/assets/logo.png" alt="logo" class="w-8">
+        <h1 class="text-2xl lg:text-3xl text-gray-900 font-bold">Watts & Drops</h1>
+      </div>
+
+      <button @click="isMenuOpen = !isMenuOpen" class="w-12 h-12 text-3xl hover:bg-gray-100 rounded-full cursor-pointer">
+        {{ isMenuOpen ? '✕' : '☰' }}
+      </button>
+    </div>
+
+    <!-- Mobile Nav Menu -->
+    <div v-if="isMenuOpen" class="flex flex-col items-center gap-6 py-8 lg:hidden">
+      <ul class="flex flex-col items-center gap-6">
+        <li v-for="item in navItems" :key="item.id" class="cursor-pointer">
+          <a :href="item.href" @click="isMenuOpen = false">{{ item.label }}</a>
+        </li>
+      </ul>
+
+      <div class="flex items-center gap-2">
+        <!-- Not Signed In -->
+        <template v-if="!isSignedIn">
+          <router-link to="/register" @click="isMenuOpen = false" class="border py-1 px-5 rounded-sm cursor-pointer bg-white hover:bg-gray-100">Login</router-link>
+          <router-link to="/register" @click="isMenuOpen = false" class="border py-1 px-5 rounded-sm cursor-pointer bg-white hover:bg-gray-100">Sign Up</router-link>
+        </template>
+
+        <!-- Admin Users -->
+        <router-link v-else-if="isAdmin" :to="adminDashboardRoute" @click="isMenuOpen = false" class="border py-1 px-5 rounded-lg cursor-pointer hover:opacity-90 bg-(--primary-color) text-white font-medium">
+          Dashboard
+        </router-link>
+
+        <!-- Student Users -->
+        <router-link v-else-if="isStudent" :to="hasApprovedRequest ? studentDashboardRoute : requestRoute" @click="isMenuOpen = false" class="border py-1 px-5 rounded-lg cursor-pointer hover:opacity-90 bg-(--primary-color) text-white font-medium">
+          {{ hasApprovedRequest ? "Student Dashboard" : "Request Student Dashboard" }}
+        </router-link>
+      </div>
+    </div>
+
+  </nav>
+</template>

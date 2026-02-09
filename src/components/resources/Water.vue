@@ -59,7 +59,7 @@ const changePositive = computed(() => percentChange.value > 0)
         <div class="card-border flex flex-col gap-6 w-full">
             <div class="flex items-center justify-between gap-4">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex justify-center items-center">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex justify-center items-center transition-all duration-300 hover:scale-110">
                         <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path id="Vector" d="M16.0001 13.3848C16.0001 14.6088 15.526 15.7828 14.6821 16.6483C14.203 17.1397 13.6269 17.5091 13 17.7364M19 13.6923C19 7.11538 12 2 12 2C12 2 5 7.11538 5 13.6923C5 15.6304 5.7375 17.4893 7.05025 18.8598C8.36301 20.2302 10.1436 20.9994 12.0001 20.9994C13.8566 20.9994 15.637 20.2298 16.9497 18.8594C18.2625 17.4889 19 15.6304 19 13.6923Z" stroke="#2b7fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -73,12 +73,12 @@ const changePositive = computed(() => percentChange.value > 0)
                 <div class="flex flex-col items-end gap-2">
                     <!-- here data -->
                     <div
-  class="text-center text-xs font-bold px-3 py-1 rounded-full border"
-  :class="changePositive
-    ? 'text-red-700 bg-red-100 border-red-200'
-    : 'text-green-700 bg-green-100 border-green-200'">
-  {{ changePositive ? '+' : '' }}{{ percentChange }}%
-</div>
+                        class="text-center text-xs font-bold px-3 py-1 rounded-full border"
+                        :class="changePositive
+                            ? 'text-red-700 bg-red-100 border-red-200'
+                            : 'text-green-700 bg-green-100 border-green-200'">
+                        {{ changePositive ? '+' : '' }}{{ percentChange }}%
+                    </div>
                     <div class="text-xs text-gray-400">vs last month</div>
                 </div>
             </div>

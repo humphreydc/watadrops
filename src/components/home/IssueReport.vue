@@ -1,100 +1,150 @@
 <script setup>
+import { ref } from 'vue'
+
+const features = ref([
+  {
+    icon: 'chart',
+    title: 'Real-Time Monitoring',
+    description: 'Track electricity, water, and supply usage in real-time for better decision-making.',
+    color: 'teal'
+  },
+  {
+    icon: 'dashboard',
+    title: 'Personal Dashboards',
+    description: 'Students and staff can access individual dashboards to monitor personal consumption.',
+    color: 'teal'
+  },
+  {
+    icon: 'bell',
+    title: 'Alerts & Notifications',
+    description: 'Receive instant alerts about unusual usage or resource issues on campus.',
+    color: 'teal'
+  },
+  {
+    icon: 'clipboard',
+    title: 'Request Management',
+    description: 'Submit requests for resources or maintenance directly through the platform.',
+    color: 'teal'
+  },
+  {
+    icon: 'analytics',
+    title: 'Analytics & Reports',
+    description: 'View summarized usage reports to identify trends and improve efficiency.',
+    color: 'teal'
+  },
+  {
+    icon: 'shield',
+    title: 'Secure Access',
+    description: 'Role-based login ensures secure access for students, staff, and administrators.',
+    color: 'teal'
+  }
+])
 </script>
 
 <template>
-<div class="flex flex-col justify-center items-center">
-    <div class="mx-auto flex flex-col justify-center items-center text-center gap-4 sm:gap-6 mb-12">
-        <h1 class="text-4xl sm:text-5xl font-bold" >Location-Based Monitoring</h1>
-        <p class="max-w-5xl text-lg sm:text-xl font-medium">Admins can filter and review reports by campus location to quickly identify high-impact issues and maintain smooth campus operations.</p>
-    </div>
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 w-[80%] max-w-7xl">
+<section class="w-full py-12 sm:py-16 bg-white">
+<div class="max-w-7xl mx-auto px-6 sm:px-8 text-teal-900">
+  
+  <!-- Section Title -->
+  <h2 class="text-3xl sm:text-4xl font-black text-center text-teal-900 mb-12 sm:mb-16">
+    Key Features
+  </h2>
+  
+  <!-- Features Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
     
-    <div class="flex-1 rounded-xl overflow-hidden bg-white shadow-sm">
-        <div class="bg-blue-100 px-2 py-4 flex items-center gap-3 pl-4">
-            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path id="Vector" d="M16.0001 13.3848C16.0001 14.6088 15.526 15.7828 14.6821 16.6483C14.203 17.1397 13.6269 17.5091 13 17.7364M19 13.6923C19 7.11538 12 2 12 2C12 2 5 7.11538 5 13.6923C5 15.6304 5.7375 17.4893 7.05025 18.8598C8.36301 20.2302 10.1436 20.9994 12.0001 20.9994C13.8566 20.9994 15.637 20.2298 16.9497 18.8594C18.2625 17.4889 19 15.6304 19 13.6923Z" stroke="#2b7fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <h3 class="text-lg font-bold text-gray-800">Water Issues</h3>
+    <!-- Real-Time Monitoring -->
+    <div class="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-shadow card-border">
+      <div class="flex items-start gap-4 mb-4">
+        <div class="bg-gray-800 rounded-xl p-3 flex-shrink-0">
+          <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
         </div>
-        <div class="p-6 space-y-6">
-            <div>
-            <p class="text-sm font-semibold mb-2">COMMON REPORTS</p>
-            <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
-                <li>No water supply</li>
-                <li>Low pressure</li>
-                <li>Leaks or overflow</li>
-                <li>Continuous flow</li>
-            </ul>
+        <h3 class="text-lg font-bold text-teal-900 leading-tight">Real-Time Monitoring</h3>
+      </div>
+      <p class="text-sm text-teal-900 leading-relaxed">
+        Track electricity, water, and supply usage in real-time for better decision-making.
+      </p>
+    </div>
+    
+    <!-- Personal Dashboards -->
+    <div class="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-shadow card-border">
+      <div class="flex items-start gap-4 mb-4">
+        <div class="bg-gray-800 rounded-xl p-3 flex-shrink-0">
+          <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 12a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1v-7z"/>
+          </svg>
         </div>
-      <div>
-        <p class="text-sm font-semibold mb-2">ADMIN ACTION</p>
-        <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
-          <li>Review details</li>
-          <li>Check usage data</li>
-          <li>Confirm affected areas</li>
-          <li>Forward to maintenance</li>
-          <li>Update status</li>
-        </ul>
+        <h3 class="text-lg font-bold text-gray-900 leading-tight">Personal Dashboards</h3>
       </div>
+      <p class="text-sm text-gray-600 leading-relaxed">
+        Students and staff can access individual dashboards to monitor personal consumption.
+      </p>
     </div>
-  </div>
-  <div class="flex-1 rounded-xl overflow-hidden bg-white shadow-sm">
-    <div class="bg-amber-100 px-6 py-4 flex items-center gap-3 pl-4">
-        <svg class="w-8 h-8" fill="none" stroke="#fe9a00" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-        </svg>
-      <h3 class="text-lg font-bold text-gray-800">Electricity Issues</h3>
-    </div>
-    <div class="p-6 space-y-6">
-      <div>
-        <p class="text-sm font-semibold mb-2">COMMON REPORTS</p>
-        <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
-          <li>Lights or outlets not working</li>
-          <li>Faulty air conditioning</li>
-          <li>Power outages</li>
-          <li>High usage alerts</li>
-        </ul>
+    
+    <!-- Alerts & Notifications -->
+    <div class="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-shadow card-border">
+      <div class="flex items-start gap-4 mb-4">
+        <div class="bg-gray-800 rounded-xl p-3 flex-shrink-0">
+          <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 leading-tight">Alerts & Notifications</h3>
       </div>
-      <div>
-        <p class="text-sm font-semibold mb-2">ADMIN ACTION</p>
-        <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
-          <li>Verify usage data</li>
-          <li>Identify issue scope</li>
-          <li>Notify facilities</li>
-          <li>Monitor follow-up</li>
-          <li>Resolve report</li>
-        </ul>
-      </div>
+      <p class="text-sm text-gray-600 leading-relaxed">
+        Receive instant alerts about unusual usage or resource issues on campus.
+      </p>
     </div>
-  </div>
-  <div class="flex-1 rounded-xl overflow-hidden bg-white shadow-sm">
-    <div class="bg-red-200 px-6 py-4 flex items-center gap-3">
-        <svg class="w-8 h-8 fill-red-500" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><title>ionicons-v5-l</title><path d="M84,480H28a12,12,0,0,1-12-12V92A12,12,0,0,1,28,80H84A12,12,0,0,1,96,92V468A12,12,0,0,1,84,480Z"/><path d="M240,208V156a12,12,0,0,0-12-12H124a12,12,0,0,0-12,12v52Z"/><path d="M112,416v52a12,12,0,0,0,12,12H228a12,12,0,0,0,12-12V416Z"/><rect x="112" y="240" width="128" height="144"/><path d="M340,480H268a12,12,0,0,1-12-12V44a12,12,0,0,1,12-12h72a12,12,0,0,1,12,12V468A12,12,0,0,1,340,480Z"/><path d="M369,100.7l30,367.83a12,12,0,0,0,13.45,10.92l72.16-9a12,12,0,0,0,10.47-12.9L465,91.21a12,12,0,0,0-13.2-10.94l-72.13,7.51A12,12,0,0,0,369,100.7Z"/>
-        </svg>
-      <h3 class="text-lg font-bold text-gray-800">Supplies Issues</h3>
-    </div>
-    <div class="p-6 space-y-6">
-      <div>
-        <p class="text-sm font-semibold mb-2">COMMON REPORTS</p>
-        <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
-          <li>Missing supplies</li>
-          <li>Cafeteria shortage</li>
-          <li>Broken items</li>
-          <li>Fast depletion</li>
-        </ul>
+    
+    <!-- Request Management -->
+    <div class="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-shadow card-border">
+      <div class="flex items-start gap-4 mb-4">
+        <div class="bg-gray-800 rounded-xl p-3 flex-shrink-0">
+          <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 leading-tight">Request Management</h3>
       </div>
-      <div>
-        <p class="text-sm font-semibold mb-2">ADMIN ACTION</p>
-        <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
-          <li>Check inventory</li>
-          <li>Validate urgency</li>
-          <li>Approve restocking</li>
-          <li>Update records</li>
-          <li>Close report</li>
-        </ul>
-      </div>
+      <p class="text-sm text-gray-600 leading-relaxed">
+        Submit requests for resources or maintenance directly through the platform.
+      </p>
     </div>
+    
+    <!-- Analytics & Reports -->
+    <div class="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-shadow card-border">
+      <div class="flex items-start gap-4 mb-4">
+        <div class="bg-gray-800 rounded-xl p-3 flex-shrink-0">
+          <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 leading-tight">Analytics & Reports</h3>
+      </div>
+      <p class="text-sm text-gray-600 leading-relaxed">
+        View summarized usage reports to identify trends and improve efficiency.
+      </p>
+    </div>
+    
+    <!-- Secure Access -->
+    <div class="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-shadow card-border">
+      <div class="flex items-start gap-4 mb-4">
+        <div class="bg-gray-800 rounded-xl p-3 flex-shrink-0">
+          <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 leading-tight">Secure Access</h3>
+      </div>
+      <p class="text-sm text-gray-600 leading-relaxed">
+        Role-based login ensures secure access for students, staff, and administrators.
+      </p>
+    </div>
+    
   </div>
 </div>
-</div>
+</section>
 </template>

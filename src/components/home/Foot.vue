@@ -1,57 +1,87 @@
 <script setup>
 </script>
-
 <template>
-  <footer class="bg-black text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        <!-- Brand -->
-        <div class="sm:col-span-2 lg:col-span-1">
-          <h2 class="text-green-500 font-bold text-lg mb-2">Watts & Drops</h2>
-          <p class="text-gray-400 text-sm leading-relaxed">
-            Advanced campus resource monitoring<br>
-            for the College of Engineering and<br>
-            Information Sciences.
-          </p>
-        </div>
-        
-        <!-- System -->
-        <div>
-          <h3 class="text-white font-semibold text-sm mb-4">SYSTEM</h3>
-          <ul class="space-y-2 text-gray-400 text-sm">
-            <li><a href="#" class="hover:text-white transition-colors">Logs</a></li>
-            <li><a href="#" class="hover:text-white transition-colors">Security</a></li>
-            <li><a href="#" class="hover:text-white transition-colors">Uptime</a></li>
-          </ul>
-        </div>
-        
-        <!-- Support -->
-        <div>
-          <h3 class="text-white font-semibold text-sm mb-4">SUPPORT</h3>
-          <ul class="space-y-2 text-gray-400 text-sm">
-            <li><a href="#" class="hover:text-white transition-colors">IT Helpdesk</a></li>
-            <li><a href="#" class="hover:text-white transition-colors">Facility Management</a></li>
-          </ul>
-        </div>
-        
-        <!-- Legal -->
-        <div>
-          <h3 class="text-white font-semibold text-sm mb-4">LEGAL</h3>
-          <ul class="space-y-2 text-gray-400 text-sm">
-            <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
-            <li><a href="#" class="hover:text-white transition-colors">Terms of Use</a></li>
-          </ul>
-        </div>
-      </div>
+<footer class="bg-gradient-to-b from-gray-900 to-black text-white">
+<div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12 sm:py-16 lg:py-20">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+  
+  <!-- Brand -->
+  <div class="sm:col-span-2 lg:col-span-1 space-y-4">
+    <div class="flex items-center gap-2">
+      <img src="/src/assets/logo.png" alt="logo" class="w-8">
+      <h2 class="bg-linear-to-r from-cyan-500 to-green-500 bg-clip-text text-transparent font-black text-2xl">Watts & Drops</h2>
     </div>
-    
-    <!-- Copyright Bar -->
-    <div class="border-t border-gray-800 py-4">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p class="text-center text-gray-500 text-sm">
-          © 2026 Watts & Drops. All rights reserved.
-        </p>
-      </div>
-    </div>
-  </footer>
+    <p class="text-gray-400 text-sm leading-relaxed max-w-xs">
+      Advanced campus resource monitoring for the College of Engineering and Information Sciences.
+    </p>
+  </div>
+  
+  <!-- System -->
+  <div class="space-y-4">
+    <h3 class="text-white font-bold text-xs tracking-wider uppercase mb-5">System</h3>
+    <ul class="space-y-3">
+      <li>
+        <a href="#" class="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+          Logs
+        </a>
+      </li>
+      <li>
+        <a href="#" class="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+          Security
+        </a>
+      </li>
+      <li>
+        <a href="#" class="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+          Uptime
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Support -->
+  <div class="space-y-4">
+    <h3 class="text-white font-bold text-xs tracking-wider uppercase mb-5">Support</h3>
+    <ul class="space-y-3">
+      <li>
+        <a href="#" class="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+          IT Helpdesk
+        </a>
+      </li>
+      <li>
+        <a href="#" class="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+          Facility Management
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Legal -->
+  <div class="space-y-4">
+    <h3 class="text-white font-bold text-xs tracking-wider uppercase mb-5">Legal</h3>
+    <ul class="space-y-3">
+      <li>
+        <a href="#" class="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+          Privacy Policy
+        </a>
+      </li>
+      <li>
+        <a href="#" class="text-gray-400 hover:text-emerald-400 transition-colors text-sm">
+          Terms of Use
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+</div>
+</div>
+
+<!-- Copyright Bar -->
+<div class="border-t border-gray-800">
+<div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-6">
+  <p class="text-center text-gray-500 text-sm">
+    © 2026 Watts & Drops. All rights reserved.
+  </p>
+</div>
+</div>
+</footer>
 </template>

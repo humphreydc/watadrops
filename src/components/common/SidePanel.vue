@@ -32,45 +32,41 @@ onAuthStateChanged(auth, async (user) => {
     loadingRole.value = false
   }
 })
-// ======================
-
 
 // ===== ICONS =====
 const baseIcons = {
   overview: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15v4m6-6v6m6-4v4m6-6v6M3 11l6-5 6 5 5.5-5.5"/>
     </svg>`,
-
   request: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 5h6m-6 4h6M10 3v4h4V3h-4Z"/>
     </svg>`,
-
   resolution: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+    </svg>`,
+  approval: `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
     </svg>`
 }
 
-// ===== ADMIN MENU =====
+// ===== NAV ITEMS =====
 const adminNavItems = [
   { id: "overview", label: "Overview", icon: baseIcons.overview },
   { id: "request", label: "Request", icon: baseIcons.request },
-  { id: "resolution", label: "Resolution", icon: baseIcons.resolution }
+  { id: "resolution", label: "Resolution", icon: baseIcons.resolution },
+  { id: "approval", label: "Approve Requests", icon: baseIcons.approval }
 ]
 
-// ===== STUDENT MENU =====
 const studentNavItems = [
   { id: "overview", label: "My Dashboard", icon: baseIcons.overview },
   { id: "report", label: "Report Issue", icon: baseIcons.request },
   { id: "history", label: "History", icon: baseIcons.resolution }
 ]
 
-// ===== COMPUTED NAV ITEMS =====
-const navItems = computed(() => {
-  return userRole.value === 'admin' ? adminNavItems : studentNavItems
-})
+const navItems = computed(() => userRole.value === 'admin' ? adminNavItems : studentNavItems)
 
+// ===== ACTIVE ITEM =====
 const activeItemId = ref("overview")
-
 const isActive = (item) => {
   activeItemId.value = item.id
   emit('select', item.id)
@@ -89,9 +85,7 @@ const isActive = (item) => {
         <h1 v-if="!collapsed" class="text-2xl text-(--primary-color) font-bold">
           {{ loadingRole ? 'Loading...' : (userRole === 'admin' ? 'Admin Portal' : 'Student Portal') }}
         </h1>
-        <button 
-          @click="emit('close')" 
-          class="lg:hidden p-2 text-xl text-gray-500 cursor-pointer">
+        <button @click="emit('close')" class="lg:hidden p-2 text-xl text-gray-500 cursor-pointer">
           ✕
         </button>
       </div>
@@ -104,8 +98,8 @@ const isActive = (item) => {
 
         <ul class="flex flex-col gap-2">
           <li 
-            v-for="item in navItems"
-            :key="item.id"
+            v-for="item in navItems" 
+            :key="item.id" 
             class="flex items-center text-sm font-semibold py-2 px-3 gap-3 cursor-pointer rounded-sm"
             @click="isActive(item)"
             :class="[
@@ -119,6 +113,7 @@ const isActive = (item) => {
             <span v-if="!collapsed">{{ item.label }}</span>
           </li>
         </ul>
+
       </div>
     </div>
 

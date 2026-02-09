@@ -2,24 +2,25 @@
 </script>
 
 <template>
-    <section class="w-full flex justify-center items-center">
-        <!-- wrapper ng siomai -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 sm:py-12 px-8 sm:px-12 max-w-7xl gap-6">
-            <div class="card-border-gray">
-                <span class="material-symbols-outlined">manage_accounts</span>
-                <h2 class="font-bold text-xl">User Management</h2>
-                <p>Control role-based access for students, faculty, and maintenance staff.</p>
-            </div>
-            <div class="card-border-gray">
-                <span class="material-symbols-outlined">android_cell_4_bar</span>
-                <h2 class="font-bold text-xl">Infrastructure Analytics</h2>
-                <p>Generate deep-dive reports on campus sustainability and resource waste.</p>
-            </div>
-            <div class="card-border-gray">
-                <span class="material-symbols-outlined">handyman</span>
-                <h2 class="font-bold text-xl">Request Overrides</h2>
-                <p>Approve or deny resource maintenance requests from across campus facilities.</p>
-            </div>
-        </div>
-    </section>
+  <section class="w-full">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col items-center">
+      
+      <!-- Section Heading -->
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-teal-900 text-center leading-tight relative">
+        About <span class="bg-linear-to-r from-cyan-500 to-green-500 bg-clip-text text-transparent">Watts & Drops</span>
+      </h2>
+
+      <!-- Content Card -->
+      <div class="px-4 py-4 sm:px-12 text-center">
+        <p class="text-teal-900 text-base sm:text-lg leading-relaxed">
+          Watts & Drops is a <span class="font-semibold text-teal-900">college resource monitoring system</span> 
+          designed to help students and administrators <span class="text-emerald-600 font-semibold">visualize and manage campus resources efficiently</span>. 
+          By tracking electricity, water, and supply usage, the platform encourages 
+          <span class="font-semibold text-teal-900">responsible consumption</span> and helps reduce 
+          waste across campus facilities.
+        </p>
+      </div>
+
+    </div>
+  </section>
 </template>

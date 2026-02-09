@@ -59,7 +59,7 @@ const changePositive = computed(() => percentChange.value > 0)
         <div class="card-border flex flex-col gap-6 w-full">
             <div class="flex items-center justify-between gap-4">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-amber-100 rounded-xl flex justify-center items-center">
+                    <div class="w-12 h-12 bg-amber-100 rounded-xl flex justify-center items-center transition-all duration-300 hover:scale-110">
                         <svg class="w-8 h-8" fill="none" stroke="#fe9a00" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
