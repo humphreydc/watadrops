@@ -162,8 +162,8 @@ const goToDashboard = () => {
       <div class="flex items-center gap-2" v-if="!loading">
 
         <template v-if="!isSignedIn">
-          <router-link to="/register">Login</router-link>
-          <router-link to="/register">Sign Up</router-link>
+          <router-link to="/register" class="border py-1 px-4">Login</router-link>
+          <router-link to="/register" class="border py-1 px-4">Sign Up</router-link>
         </template>
 
         <!-- 🔥 SAME LOGIC FOR MOBILE -->
