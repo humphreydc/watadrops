@@ -6,7 +6,6 @@ import { addDoc, collection, serverTimestamp, doc, getDoc } from 'firebase/fires
 const category = ref('')
 const location = ref('')
 const description = ref('')
-const priority = ref('Low')
 
 const message = ref('')
 const messageType = ref('')
@@ -35,7 +34,6 @@ const submitReport = async () => {
       category: category.value,
       location: location.value,
       description: description.value,
-      priority: priority.value,
       status: "Pending",
       createdAt: serverTimestamp()
     })
@@ -46,7 +44,6 @@ const submitReport = async () => {
     category.value = ''
     location.value = ''
     description.value = ''
-    priority.value = 'Low'
 
   } catch (error) {
     console.error(error)
@@ -59,12 +56,12 @@ const submitReport = async () => {
 </script>
 
 <template>
-<section class="px-4 py-8 lg:py-12 lg:px-8">
+<section class="px-4 py-8 lg:py-12 lg:px-8 fade-up">
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
     <!-- Report Form -->
     <div class="w-full">
-      <div class="p-6 bg-white rounded-lg shadow-sm border border-gray-200">
-        <h2 class="text-xl font-bold text-(--primary-color) mb-4">Report an Issue</h2>
+      <div class="card-border">
+        <h2 class="text-2xl font-bold text-(--primary-color) mb-4">Report an Issue</h2>
 
         <div v-if="message" class="mb-4 text-sm font-semibold"
           :class="{
@@ -96,16 +93,6 @@ const submitReport = async () => {
               class="input-border w-full px-4 py-2.5"
               placeholder="e.g. Room 302, Library"
             />
-          </div>
-
-          <div>
-            <label class="block text-sm font-semibold mb-1">Priority</label>
-            <select v-model="priority" class="input-border w-full px-4 py-2.5">
-              <option>Low</option>
-              <option>Medium</option>
-              <option>High</option>
-              <option>Urgent</option>
-            </select>
           </div>
 
           <div>

@@ -1,21 +1,25 @@
-import { ref, onMounted } from 'vue'
+// src/composables/useStudentReports.js
+import { ref } from 'vue'
 import { auth, db } from '@/firebase/config'
 import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestore'
+import { onAuthStateChanged } from 'firebase/auth'
 
 export function useStudentReports() {
-
   const reports = ref([])
-  const loading = ref(false)
+  const loading = ref(true)
 
-  const fetchReports = () => {
-    loading.value = true
+  let unsubscribe = null
 
-    const user = auth.currentUser
+  onAuthStateChanged(auth, (user) => {
+    if (unsubscribe) unsubscribe()
 
     if (!user) {
+      reports.value = []
       loading.value = false
       return
     }
+
+    loading.value = true
 
     const q = query(
       collection(db, "reports"),
@@ -23,20 +27,14 @@ export function useStudentReports() {
       orderBy("createdAt", "desc")
     )
 
-    onSnapshot(q, (snapshot) => {
+    unsubscribe = onSnapshot(q, (snapshot) => {
       reports.value = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       }))
-
       loading.value = false
     })
-  }
+  })
 
-  onMounted(fetchReports)
-
-  return {
-    reports,
-    loading
-  }
+  return { reports, loading }
 }

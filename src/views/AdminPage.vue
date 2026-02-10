@@ -7,6 +7,7 @@ import Dashboard from '@/components/admin/Dashboard.vue';
 import DataEntry from '@/components/admin/sections/DataEntry.vue';
 import Request from '@/components/admin/sections/Request.vue';
 import Resolution from '@/components/admin/sections/Resolution.vue';
+import Approval from '@/components/admin/sections/Approval.vue';
 
 const isCollapsed = ref(true);
 
@@ -50,6 +51,7 @@ const handleSelect = (id) => {
                 </div>
                 <Request v-if="activeTab === 'request'" />
                 <Resolution v-if="activeTab === 'resolution'" />
+                <Approval v-if="activeTab === 'approval'"/>
             </main>
         </div>
     </div>
