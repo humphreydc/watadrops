@@ -28,7 +28,8 @@ const routes = [
   {
     path: "/admin-dashboard",
     name: "AdminDashboard",
-    component: AdminPage
+    component: AdminPage,
+    meta: { requiresAdmin: true }
   },
   {
     path: "/student-request",
@@ -49,10 +50,30 @@ const auth = getAuth()
 const db = getFirestore()
 
 router.beforeEach(async (to, from, next) => {
-  const user = auth.currentUser
-
   try {
-    // ===== 1. BLOCK UNAPPROVED STUDENTS FROM DASHBOARD =====
+    // 🔥 WAIT FOR FIREBASE AUTH TO INITIALIZE
+    const user = await new Promise((resolve) => {
+      const unsubscribe = auth.onAuthStateChanged((u) => {
+        unsubscribe()
+        resolve(u)
+      })
+    })
+
+    // ===== 1. ADMIN-ONLY ROUTES =====
+    if (to.meta.requiresAdmin) {
+      if (!user) {
+        return next("/")
+      }
+
+      const snap = await getDoc(doc(db, "users", user.uid))
+
+      if (!snap.exists() || snap.data().role !== "admin") {
+        alert("Admin access only.")
+        return next("/")
+      }
+    }
+
+    // ===== 2. STUDENT APPROVAL REQUIRED ROUTES =====
     if (to.meta.requiresApproval) {
       if (!user) {
         return next("/")
@@ -66,11 +87,11 @@ router.beforeEach(async (to, from, next) => {
 
       if (!request) {
         alert("You are not approved to access this dashboard yet.")
-        return next("/")
+        return next("/student-request")
       }
     }
 
-    // ===== 2. REDIRECT LOGGED-IN USERS AWAY FROM REGISTER PAGE =====
+    // ===== 3. PREVENT LOGGED-IN USERS FROM RETURNING TO REGISTER PAGE =====
     if (user && to.name === "Register") {
       const snap = await getDoc(doc(db, "users", user.uid))
 

@@ -127,10 +127,11 @@ const goToDashboard = () => {
             </router-link>
           </template>
 
+          <!-- 🔥 SINGLE BUTTON WITH DYNAMIC LABEL -->
           <button
             v-else
             @click="goToDashboard"
-            class="border py-2 px-5 rounded-lg text-white font-semibold bg-(--primary-color) cursor-pointer"
+            class="border py-2 px-5 rounded-lg text-white font-semibold bg-(--primary-color)"
           >
             {{ dashboardButtonLabel }}
           </button>
@@ -165,10 +166,11 @@ const goToDashboard = () => {
           <router-link to="/register">Sign Up</router-link>
         </template>
 
+        <!-- 🔥 SAME LOGIC FOR MOBILE -->
         <button
           v-else
           @click="goToDashboard"
-          class="border py-1 px-5 rounded-lg bg-(--primary-color) text-white cursor-pointer"
+          class="border py-1 px-5 rounded-lg bg-(--primary-color) text-white"
         >
           {{ dashboardButtonLabel }}
         </button>

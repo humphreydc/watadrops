@@ -1,5 +1,6 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import { auth, db } from '@/firebase/config'
 import { doc, getDoc } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
@@ -10,17 +11,23 @@ const props = defineProps({
 })
 const emit = defineEmits(['close', 'select'])
 
+const router = useRouter()
+
 // ===== USER ROLE LOGIC =====
-const userRole = ref('student')   // default
+const userRole = ref('student')
 const loadingRole = ref(true)
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     try {
       const snap = await getDoc(doc(db, 'users', user.uid))
+
       if (snap.exists()) {
         userRole.value = snap.data().role || 'student'
+      } else {
+        userRole.value = 'student'
       }
+
     } catch (err) {
       console.error("Failed to get role:", err)
       userRole.value = 'student'
@@ -30,6 +37,15 @@ onAuthStateChanged(auth, async (user) => {
   } else {
     userRole.value = 'student'
     loadingRole.value = false
+  }
+})
+
+// 🔥 AUTO REDIRECT WHEN ROLE CHANGES
+watch(userRole, (newRole) => {
+  if (newRole === 'admin') {
+    router.push('/admin-dashboard')
+  } else {
+    router.push('/student-dashboard')
   }
 })
 
@@ -63,10 +79,13 @@ const studentNavItems = [
   { id: "history", label: "History", icon: baseIcons.resolution }
 ]
 
-const navItems = computed(() => userRole.value === 'admin' ? adminNavItems : studentNavItems)
+const navItems = computed(() =>
+  userRole.value === 'admin' ? adminNavItems : studentNavItems
+)
 
 // ===== ACTIVE ITEM =====
 const activeItemId = ref("overview")
+
 const isActive = (item) => {
   activeItemId.value = item.id
   emit('select', item.id)
