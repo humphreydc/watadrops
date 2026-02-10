@@ -144,10 +144,10 @@ const goToDashboard = () => {
     <div class="flex justify-between items-center px-6 py-3 lg:hidden">
       <div class="flex items-center gap-4">
         <img src="/src/assets/logo.png" alt="logo" class="w-8">
-        <h1 class="text-2xl font-bold">Watts & Drops</h1>
+        <h1 class="text-2xl font-bold bg-linear-to-r from-cyan-500 to-green-500 bg-clip-text text-transparent">Watts & Drops</h1>
       </div>
 
-      <button @click="isMenuOpen = !isMenuOpen">
+      <button @click="isMenuOpen = !isMenuOpen" class="text-2xl">
         {{ isMenuOpen ? '✕' : '☰' }}
       </button>
     </div>
