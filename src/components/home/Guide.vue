@@ -43,7 +43,7 @@ onMounted(() => {
       </div>
       
       <!-- CTA button -->
-      <div class="px-6 py-3 sm:px-8 sm:py-4 bg-white text-teal-900 font-bold text-sm sm:text-base rounded-lg shadow-lg w-full sm:w-auto text-center">
+      <div class="px-6 py-3 sm:px-8 sm:py-4 bg-white font-bold text-sm sm:text-base rounded-lg shadow-lg w-full sm:w-auto text-center">
         START TRACKING TODAY
       </div>
       

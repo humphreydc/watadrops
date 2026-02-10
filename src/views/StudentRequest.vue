@@ -51,20 +51,20 @@ const submitRequest = async () => {
 
     <!-- Navbar -->
     <nav class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 sm:px-12 py-4 flex items-center justify-between">
-      <h1 class="text-3xl font-black tracking-tight bg-linear-to-r from-cyan-500 to-green-500 bg-clip-text text-transparent flex items-center gap-4">
-        <img src="/src/assets/logo.png" alt="logo" class="w-8">
+        <h1 class="text-2xl lg:text-3xl font-black tracking-tight bg-linear-to-r from-cyan-500 to-green-500 bg-clip-text text-transparent flex items-center gap-4">
+         <img src="/src/assets/logo.png" alt="logo" class="w-8">
          Watts & Drops
       </h1>
       <div class="flex items-center gap-6">
         <p class="text-xs font-bold uppercase tracking-widest text-gray-400 hidden md:block">Student Portal</p>
-        <button @click="showModal = true" class="gradient-btn px-6 py-2">
-          Access Dashboard
+        <button @click="showModal = true" class="gradient-btn text-xs sm:text-base px-2 py-1 sm:px-6 sm:py-2">
+          Dashboard
         </button>
       </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="flex-grow flex items-center justify-center py-12 px-6">
+    <main class="grow flex items-center justify-center py-12 px-6">
       <header class="max-w-4xl w-full text-center space-y-6">
         <div class="inline-block px-4 py-1.5 mb-4 text-sm font-medium text-emerald-700 bg-emerald-100 rounded-full">
           Sustainability Tracking

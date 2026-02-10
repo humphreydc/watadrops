@@ -68,7 +68,7 @@ const stats = computed(() => [
 <template>
   <div class="card-border">
     <div class="flex items-center gap-2 mb-6">
-      <h2 class="text-2xl font-bold text-black">Quick Stats</h2>
+      <h2 class="text-xl font-bold text-black">Quick Stats</h2>
     </div>
 
     <div class="space-y-8">
@@ -84,7 +84,7 @@ const stats = computed(() => [
             </div>
             <span class="text-lg font-semibold text-gray-800">{{ stat.title }}</span>
           </div>
-          <span class="text-2xl font-bold" :class="stat.valueColor">{{ stat.value }}%</span>
+          <span class="text-xl font-bold" :class="stat.valueColor">{{ stat.value }}%</span>
         </div>
 
         <!-- Progress Bar -->

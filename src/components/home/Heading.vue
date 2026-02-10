@@ -35,7 +35,7 @@
       Monitor Campus Resource <br>Consumption
     </h1>
 
-    <p class="text-center text-base sm:text-lg text-teal-900 max-w-3xl px-4">
+    <p class="text-center text-base sm:text-lg max-w-3xl px-4">
       Watts & Drops empowers students and administrators to track electricity, water, and supply usage — helping build a smarter, greener, and more sustainable campus.
     </p>
 

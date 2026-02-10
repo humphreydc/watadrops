@@ -153,7 +153,7 @@ const handleLoadMore = async () => {
     <div v-if="!loading && hasMore && pending.length" class="flex justify-center mt-6">
       <button
         @click="handleLoadMore"
-        class="px-4 py-2 text-xs font-bold border rounded cursor-pointer hover:bg-gray-50 transition-colors"
+        class="px-4 py-2 text-xs font-bold border rounded cursor-pointer bg-white hover:bg-gray-50 transition-colors"
       >
         {{ loading ? 'Loading...' : 'Load More' }}
       </button>
